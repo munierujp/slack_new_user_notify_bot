@@ -1,0 +1,2 @@
+# slack_new_user_notify_bot
+Slackの新規ユーザーを通知するBOT
