@@ -29,8 +29,7 @@ function doPost (e) {
 */
 function normalizeRequest_ (e) {
   var postData = e.postData
-  var contents = postData.contents
-  var request = contents ? contents : postData.getDataAsString()
+  var request = postData.contents || postData.getDataAsString()
   return JSON.parse(request)
 }
 
