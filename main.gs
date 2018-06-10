@@ -1,4 +1,7 @@
 var properties = PropertiesService.getScriptProperties()
+var MESSAGE_TEMPLATE = properties.getProperty('MESSAGE_TEMPLATE')
+var MESSAGE_TEMPLATE_DATE_LANG = properties.getProperty('MESSAGE_TEMPLATE_DATE_LANG')
+var MESSAGE_TEMPLATE_UPDATED_FORMAT = properties.getProperty('MESSAGE_TEMPLATE_UPDATED_FORMAT')
 var WEBHOOK_URL = properties.getProperty('WEBHOOK_URL')
 
 var REQUEST_TYPE_URL_VERIFICATION = 'url_verification'
@@ -47,14 +50,38 @@ function createTextOutput_ (text) {
 * @param {Object} event - イベント
 * @param {Object} event.user - イベントのユーザー
 * @param {string} event.user.id - イベントのユーザーのID
-* @param {string} event.user.real_name - イベントのユーザーの名前
+* @param {string} event.user.name - イベントのユーザーの名前
+* @param {string} event.user.real_name - イベントのユーザーの実名
+* @param {Object} event.user.profile - イベントのユーザーのプロフィール
+* @param {Object} event.user.profile.email - イベントのユーザーのプロフィールのメールアドレス
+* @param {number} event.user.updated - イベントのユーザーの更新日持
 * @return {string} メッセージ
 */
 function createMessage_ (event) {
   var user = event.user
-  var id = user.id
-  var name = user.real_name
-  return name + ' (<@' + id + '>) has joined.'
+  var replacers = [
+    [/{{id}}/g, user.id],
+    [/{{name}}/g, user.name],
+    [/{{real_name}}/g, user.real_name],
+    [/{{email}}/g, user.profile.email],
+    [/{{updated}}/g, Moment.moment(user.updated * 1000).format(MESSAGE_TEMPLATE_UPDATED_FORMAT)]
+  ]
+  return replaceText_(MESSAGE_TEMPLATE, replacers)
+}
+
+/**
+* 文字列を複数の条件で置換します。
+* @param {string} source 文字列
+* @param {Object[][]} replacers 置換用配列
+* @return {string} 置換した文字列
+*/
+function replaceText_ (source, replacers) {
+  var replaced = source
+  for (var i in replacers) {
+    var replacer = replacers[i]
+    replaced = replaced.replace(replacer[0], replacer[1])
+  }
+  return replaced
 }
 
 /**
