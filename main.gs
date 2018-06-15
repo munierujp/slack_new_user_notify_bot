@@ -61,29 +61,14 @@ function createTextOutput_ (text) {
 */
 function createMessage_ (event) {
   var user = event.user
-  var replacers = [
-    [/{{id}}/g, user.id],
-    [/{{name}}/g, user.name],
-    [/{{real_name}}/g, user.real_name],
-    [/{{email}}/g, user.profile.email],
-    [/{{updated}}/g, moment(user.updated * 1000).format(MESSAGE_TEMPLATE_UPDATED_FORMAT)]
-  ]
-  return replaceText_(MESSAGE_TEMPLATE, replacers)
-}
-
-/**
-* 文字列を複数の条件で置換します。
-* @param {string} source 文字列
-* @param {Object[][]} replacers 置換用配列
-* @return {string} 置換した文字列
-*/
-function replaceText_ (source, replacers) {
-  var replaced = source
-  for (var i in replacers) {
-    var replacer = replacers[i]
-    replaced = replaced.replace(replacer[0], replacer[1])
+  var data = {
+    id: user.id,
+    name: user.name,
+    real_name: user.real_name,
+    email: user.profile.email,
+    updated: moment(user.updated * 1000).format(MESSAGE_TEMPLATE_UPDATED_FORMAT)
   }
-  return replaced
+  return Mustache.render(MESSAGE_TEMPLATE, data)
 }
 
 /**
