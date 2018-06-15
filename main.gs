@@ -1,3 +1,5 @@
+var moment = Moment.moment
+
 var properties = PropertiesService.getScriptProperties()
 var MESSAGE_TEMPLATE = properties.getProperty('MESSAGE_TEMPLATE')
 var MESSAGE_TEMPLATE_DATE_LANG = properties.getProperty('MESSAGE_TEMPLATE_DATE_LANG')
@@ -64,7 +66,7 @@ function createMessage_ (event) {
     [/{{name}}/g, user.name],
     [/{{real_name}}/g, user.real_name],
     [/{{email}}/g, user.profile.email],
-    [/{{updated}}/g, Moment.moment(user.updated * 1000).format(MESSAGE_TEMPLATE_UPDATED_FORMAT)]
+    [/{{updated}}/g, moment(user.updated * 1000).format(MESSAGE_TEMPLATE_UPDATED_FORMAT)]
   ]
   return replaceText_(MESSAGE_TEMPLATE, replacers)
 }
