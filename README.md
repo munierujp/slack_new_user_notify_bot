@@ -20,7 +20,7 @@ Slackの新規ユーザーを通知するBOT
 |`name`|ユーザー名|`spengler`|
 |`real_name`|ユーザーの実名|`Egon Spengler`|
 |`email`|ユーザーのメールアドレス|`spengler@ghostbusters.example.com`|
-|`updated`|ユーザーの更新日持|`1502138686`|
+|`updated`|ユーザーの更新日持|`2017-08-07T20:44:46.000Z`|
 
 ### MESSAGE_TEMPLATE_DATE_LANG
 以下の言語を指定できます。  
