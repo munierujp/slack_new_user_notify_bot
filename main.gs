@@ -3,7 +3,7 @@ var moment = Moment.moment
 var properties = PropertiesService.getScriptProperties()
 var MESSAGE_TEMPLATE = properties.getProperty('MESSAGE_TEMPLATE')
 var MESSAGE_TEMPLATE_DATE_LANG = properties.getProperty('MESSAGE_TEMPLATE_DATE_LANG')
-var MESSAGE_TEMPLATE_UPDATED_FORMAT = properties.getProperty('MESSAGE_TEMPLATE_UPDATED_FORMAT')
+var MESSAGE_TEMPLATE_DATE_FORMAT = properties.getProperty('MESSAGE_TEMPLATE_DATE_FORMAT')
 var WEBHOOK_URL = properties.getProperty('WEBHOOK_URL')
 
 var REQUEST_TYPE_URL_VERIFICATION = 'url_verification'
@@ -66,7 +66,7 @@ function createMessage_ (event) {
     name: user.name,
     real_name: user.real_name,
     email: user.profile.email,
-    updated: moment(user.updated * 1000).format(MESSAGE_TEMPLATE_UPDATED_FORMAT)
+    updated: moment(user.updated * 1000).format(MESSAGE_TEMPLATE_DATE_FORMAT)
   }
   return Mustache.render(MESSAGE_TEMPLATE, data)
 }
