@@ -3,7 +3,7 @@ var moment = Moment.moment
 var properties = PropertiesService.getScriptProperties()
 var MESSAGE_TEMPLATE = properties.getProperty('MESSAGE_TEMPLATE')
 var MESSAGE_TEMPLATE_DATE_LANG = properties.getProperty('MESSAGE_TEMPLATE_DATE_LANG')
-var MESSAGE_TEMPLATE_UPDATED_FORMAT = properties.getProperty('MESSAGE_TEMPLATE_UPDATED_FORMAT')
+var MESSAGE_TEMPLATE_DATE_FORMAT = properties.getProperty('MESSAGE_TEMPLATE_DATE_FORMAT')
 var WEBHOOK_URL = properties.getProperty('WEBHOOK_URL')
 
 var REQUEST_TYPE_URL_VERIFICATION = 'url_verification'
@@ -51,24 +51,13 @@ function createTextOutput_ (text) {
 * メッセージを作成します。
 * @param {Object} event - イベント
 * @param {Object} event.user - イベントのユーザー
-* @param {string} event.user.id - イベントのユーザーのID
-* @param {string} event.user.name - イベントのユーザーの名前
-* @param {string} event.user.real_name - イベントのユーザーの実名
-* @param {Object} event.user.profile - イベントのユーザーのプロフィール
-* @param {Object} event.user.profile.email - イベントのユーザーのプロフィールのメールアドレス
 * @param {number} event.user.updated - イベントのユーザーの更新日持
 * @return {string} メッセージ
 */
 function createMessage_ (event) {
   var user = event.user
-  var data = {
-    id: user.id,
-    name: user.name,
-    real_name: user.real_name,
-    email: user.profile.email,
-    updated: moment(user.updated * 1000).format(MESSAGE_TEMPLATE_UPDATED_FORMAT)
-  }
-  return Mustache.render(MESSAGE_TEMPLATE, data)
+  user.updated = moment(user.updated * 1000).format(MESSAGE_TEMPLATE_DATE_FORMAT)
+  return Mustache.render(MESSAGE_TEMPLATE, user)
 }
 
 /**

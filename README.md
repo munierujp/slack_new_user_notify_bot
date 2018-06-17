@@ -7,20 +7,15 @@ Slackの新規ユーザーを通知するBOT
 |プロパティ|説明|例|
 |---|---|---|
 |`MESSAGE_TEMPLATE`|メッセージのテンプレート|`{{real_name}} (<@{{id}}>) has joined.`|
+|`MESSAGE_TEMPLATE_DATE_FORMAT`|メッセージのテンプレートの日付のフォーマット|`YYYY[/]M[/]D H[:]mm[:]ss`|
 |`MESSAGE_TEMPLATE_DATE_LANG`|メッセージのテンプレートの日付の言語|`ja`|
-|`MESSAGE_TEMPLATE_UPDATED_FORMAT`|メッセージのテンプレートの`updated`のフォーマット|`YYYY[/]M[/]D H[:]mm[:]ss`|
 |`WEBHOOK_URL`|SlackのWebhook URL|`https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX`|
 
 ### MESSAGE_TEMPLATE
-以下の変数を用いて、[Mustache.js](https://github.com/janl/mustache.js/)の記法で書けます。
+[MESSAGE_TEMPLATE.md](MESSAGE_TEMPLATE.md)を参照してください。
 
-|変数|説明|例|
-|---|---|---|
-|`id`|ユーザーID|`U024BE7LH`|
-|`name`|ユーザー名|`spengler`|
-|`real_name`|ユーザーの実名|`Egon Spengler`|
-|`email`|ユーザーのメールアドレス|`spengler@ghostbusters.example.com`|
-|`updated`|ユーザーの更新日持|`2017-08-07T20:44:46.000Z`|
+### MESSAGE_TEMPLATE_DATE_FORMAT
+[Moment.js](https://momentjs.com/docs/#/displaying/format/)のフォーマットパターンを使用できます。
 
 ### MESSAGE_TEMPLATE_DATE_LANG
 以下の言語を指定できます。  
