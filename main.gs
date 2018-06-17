@@ -51,24 +51,13 @@ function createTextOutput_ (text) {
 * メッセージを作成します。
 * @param {Object} event - イベント
 * @param {Object} event.user - イベントのユーザー
-* @param {string} event.user.id - イベントのユーザーのID
-* @param {string} event.user.name - イベントのユーザーの名前
-* @param {string} event.user.real_name - イベントのユーザーの実名
-* @param {Object} event.user.profile - イベントのユーザーのプロフィール
-* @param {Object} event.user.profile.email - イベントのユーザーのプロフィールのメールアドレス
 * @param {number} event.user.updated - イベントのユーザーの更新日持
 * @return {string} メッセージ
 */
 function createMessage_ (event) {
   var user = event.user
-  var data = {
-    id: user.id,
-    name: user.name,
-    real_name: user.real_name,
-    email: user.profile.email,
-    updated: moment(user.updated * 1000).format(MESSAGE_TEMPLATE_DATE_FORMAT)
-  }
-  return Mustache.render(MESSAGE_TEMPLATE, data)
+  user.updated = moment(user.updated * 1000).format(MESSAGE_TEMPLATE_DATE_FORMAT)
+  return Mustache.render(MESSAGE_TEMPLATE, user)
 }
 
 /**
